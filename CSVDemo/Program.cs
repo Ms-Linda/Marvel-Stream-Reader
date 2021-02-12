@@ -8,24 +8,53 @@ namespace CSVDemo
     {
         static void Main(string[] args)
         {
-            using (var reader = new StreamReader("Marvel.csv"))
+            bool foundFile = true;
+            List<string> marvelCharacters = new List<string>();
+
+            do
             {
-                List<string> myFile = new List<string>();
+                foundFile = true;
 
-                while (!reader.EndOfStream)
+                Console.WriteLine("What file would you like to read?");
+                var input = Console.ReadLine();
+
+
+
+
+                try
                 {
-                    var line = reader.ReadLine();
+                    using (var reader = new StreamReader(input))
+                    {
+
+                        while (!reader.EndOfStream)
+                        {
+
+                            var line = reader.ReadLine();
 
 
-                    myFile.Add(line);
+                            marvelCharacters.Add(line);
+                        }
+                    }
+
 
                 }
-                foreach (var item in myFile)
+                catch (Exception ex)
                 {
-                    Console.WriteLine(item);
+                    Console.WriteLine("File not found. Please put in the right file name");
+                    foundFile = false;
+
                 }
+             
+
+            }while (foundFile == false);
+
+
+
+            foreach (var hero in marvelCharacters)
+            {
+                Console.WriteLine(hero);
             }
-               
+   
         }
     }
 }
